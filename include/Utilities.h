@@ -32,9 +32,6 @@ quint32 fast_random();
 
 double closest_angle(const std::vector<int> &all_angles, double target_angle);
 
-int rand_int(int from, int to);
-double rand_double(double from, double to);
-
 /// For integer division, C/C++ is round towards zero, this function just do floor operation like Python
 /// For more information about integer division: <https://en.wikipedia.org/wiki/Modulo_operation>
 template <typename T>

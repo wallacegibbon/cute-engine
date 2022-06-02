@@ -89,14 +89,13 @@ void RainWeather::pause_() {
 /// Executed periodically to move the rain graphics down.
 /// Will also move them back up (at a random x,y) when far down enough.
 void RainWeather::on_rain_move_step() {
-    static RandomGenerator generator;
     Game *maps_game = map_->game();
     double screen_bottom_y = maps_game->cam().bottom();
     for (QGraphicsPixmapItem *rain : rains_) {
         rain->moveBy(0, rain_step_size_);
         if (rain->y() > screen_bottom_y) {
-            int x = generator.rand_int(-200, static_cast<int>(maps_game->cam().width()) + 200);
-            int y = generator.rand_int(-700, 0);
+            int x = common_random_generator.rand_int(-200, static_cast<int>(maps_game->cam().width()) + 200);
+            int y = common_random_generator.rand_int(-700, 0);
             rain->setPos(maps_game->map_to_map(QPoint(x, y)));
         }
     }
@@ -115,13 +114,12 @@ void RainWeather::on_rain_opacity_step() {
 }
 
 void RainWeather::on_create_splash_step() {
-    static RandomGenerator generator;
     for (int i = 0, n = num_splash_per_step_; i < n; i++) {
         Sprite *splash = new Sprite();
         splash->set_opacity(current_splash_opacity_);
         splash->add_frames(":/cute-engine-builtin/resources/graphics/effects/splash", 4, "splash", "splash");
-        int x = generator.rand_int(0, map_->game()->cam().width());
-        int y = generator.rand_int(0, map_->game()->cam().height());
+        int x = common_random_generator.rand_int(0, map_->game()->cam().width());
+        int y = common_random_generator.rand_int(0, map_->game()->cam().height());
         QPointF pos = map_->game()->map_to_map(QPoint(x, y));
         map_->play_once(splash, "splash", 50, pos);
     }

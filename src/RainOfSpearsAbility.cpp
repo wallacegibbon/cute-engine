@@ -36,7 +36,6 @@ void RainOfSpearsAbility::on_spear_step() {
 }
 
 void RainOfSpearsAbility::one_more_spear() {
-    static RandomGenerator generator;
     /// number of pixels around the owner's x position to spawn projectiles at
     const int X_RADIUS = 1000;
     /// number of pixels ABOVE the owner to spawn projectiles
@@ -44,8 +43,8 @@ void RainOfSpearsAbility::one_more_spear() {
     /// the y value "thickness" of possible y locations projectiles can spawn
     const int Y_RADIUS = 600;
 
-    int random_x_offset = generator.rand_int(-X_RADIUS / 2, X_RADIUS / 2);
-    int random_y_offset = generator.rand_int(-Y_OFFSET, Y_RADIUS - Y_OFFSET);
+    int random_x_offset = common_random_generator.rand_int(-X_RADIUS / 2, X_RADIUS / 2);
+    int random_y_offset = common_random_generator.rand_int(-Y_OFFSET, Y_RADIUS - Y_OFFSET);
     QPointF random_pos(owner()->pos().x() + random_x_offset, owner()->pos().y() + random_y_offset);
 
     QPointF target_pos = random_pos;

@@ -25,8 +25,8 @@ void cute::add_random_tree(Map *map, int num_images) {
             new RandomImageEntity(":/cute-engine-builtin/resources/graphics/tree", "tree", num_images, *pm);
     tree->add_tag("scenery");
     map->add_entity(tree);
-    double x = trim_to_gap(rand_int(100, map->width() - 100), map->cell_size());
-    double y = trim_to_gap(rand_int(100, map->height() - 100), map->cell_size());
+    double x = trim_to_gap(common_random_generator.rand_int(100, map->width() - 100), map->cell_size());
+    double y = trim_to_gap(common_random_generator.rand_int(100, map->height() - 100), map->cell_size());
     tree->set_pos(QPointF(x, y));
 }
 
@@ -60,16 +60,6 @@ double cute::closest_angle(const std::vector<int> &all_angles, double target_ang
         }
     }
     return closest;
-}
-
-int cute::rand_int(int from, int to) {
-    static RandomGenerator generator;
-    return generator.rand_int(from, to);
-}
-
-double cute::rand_double(double from, double to) {
-    static RandomGenerator generator;
-    return generator.rand_double(from, to);
 }
 
 void cute::add_tag(const std::string &tag, std::initializer_list<Entity *> entities) {

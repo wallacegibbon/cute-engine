@@ -3,6 +3,7 @@
 #include "ItemGold.h"
 #include "ItemHealthPotion.h"
 #include "Map.h"
+#include "RandomGenerator.h"
 #include "Utilities.h"
 #include "stl_helper.h"
 
@@ -33,7 +34,7 @@ void CItemDropper::on_entity_dies(Entity *entity) {
     }
 
     /// other wise, drop an item
-    int r = rand_int(0, 1);
+    int r = common_random_generator.rand_int(0, 1);
     if (r == 0) {
         ItemGold *gold = new ItemGold();
         gold->set_pos(entity->pos());

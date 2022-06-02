@@ -17,4 +17,6 @@ public:
     QPointF rand_QPointF(const QRectF &in_region);
 };
 
+extern RandomGenerator common_random_generator;
+
 } // namespace cute

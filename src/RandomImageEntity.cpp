@@ -1,4 +1,5 @@
 #include "RandomImageEntity.h"
+#include "RandomGenerator.h"
 #include "Sprite.h"
 #include "TopDownSprite.h"
 #include "Utilities.h"
@@ -18,7 +19,7 @@ RandomImageEntity::RandomImageEntity(std::string resource_foler_path, std::strin
         pixmaps.push_back(QPixmap(full_path.c_str()));
     }
 
-    int index = rand_int(0, pixmaps.size() - 1);
+    int index = common_random_generator.rand_int(0, pixmaps.size() - 1);
     TopDownSprite *spr = new TopDownSprite(pixmaps[index]);
     set_sprite(spr);
     set_pathing_map(pathing_map);

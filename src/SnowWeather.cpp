@@ -28,7 +28,6 @@ SnowWeather::~SnowWeather() {
 }
 
 void SnowWeather::start_() {
-    static RandomGenerator generator;
     Game *maps_game = map_->game();
 
     /// create some globular snow
@@ -42,8 +41,8 @@ void SnowWeather::start_() {
 
     /// position snows at top of camera
     for (QGraphicsPixmapItem *snow : globular_snows_) {
-        double offset_x = generator.rand_double(-300, maps_game->cam().width());
-        double offset_y = generator.rand_double(0, maps_game->cam().height() * 2);
+        double offset_x = common_random_generator.rand_double(-300, maps_game->cam().width());
+        double offset_y = common_random_generator.rand_double(0, maps_game->cam().height() * 2);
         snow->setPos(maps_game->cam().topLeft());
         snow->setX(snow->x() + offset_x);
         snow->setY(snow->y() - snow->boundingRect().height() - offset_y);
@@ -96,7 +95,6 @@ void SnowWeather::pause_() {
 }
 
 void SnowWeather::on_snow_step_globular() {
-    static RandomGenerator generator;
     Game *maps_game = map_->game();
 
     double screen_bottom_y = map_->game()->center_cam_pos().y() + map_->game()->sceneRect().height() / 2;
@@ -107,8 +105,8 @@ void SnowWeather::on_snow_step_globular() {
 
         /// move back up if too far down
         if (snow->y() > screen_bottom_y) {
-            double offset_x = generator.rand_double(-300, maps_game->cam().width());
-            double offset_y = generator.rand_double(0, maps_game->cam().height() * 2);
+            double offset_x = common_random_generator.rand_double(-300, maps_game->cam().width());
+            double offset_y = common_random_generator.rand_double(0, maps_game->cam().height() * 2);
             snow->setPos(maps_game->cam().topLeft());
             snow->setY(snow->y() - snow->boundingRect().height() - offset_y);
             snow->setX(snow->x() + offset_x);

@@ -1,5 +1,9 @@
 #include "RandomGenerator.h"
 
+namespace cute {
+RandomGenerator common_random_generator;
+}
+
 using namespace cute;
 
 RandomGenerator::RandomGenerator() { srand(time(0)); }
