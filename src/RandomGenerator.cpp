@@ -2,19 +2,15 @@
 
 using namespace cute;
 
-RandomGenerator::RandomGenerator() {
-    /// seed
-    srand(time(0));
-}
+RandomGenerator::RandomGenerator() { srand(time(0)); }
 
 int RandomGenerator::rand_int(int min, int max) {
     int range = max - min + 1;
-    int r = rand() % range + min;
-    return r;
+    return rand() % range + min;
 }
 
 int RandomGenerator::rand_double(double min, double max) {
-    double r = (double)rand() / (double)RAND_MAX;
+    double r = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
     return min + (max - min) * r;
 }
 

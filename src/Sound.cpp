@@ -45,7 +45,6 @@ void Sound::on_state_changed() {
     if (media_player_->state() != QMediaPlayer::StoppedState) {
         return;
     }
-
     if (num_times_played_ < num_times_to_play_ || num_times_to_play_ == -1) {
         media_player_->setPosition(0);
         media_player_->play();

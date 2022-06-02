@@ -52,6 +52,7 @@ public:
     void set_z_value(double value) { setZValue(value); }
     void set_scale(double scale) { setScale(scale); }
     void set_rotation(double angle) { setRotation(angle); }
+    void set_opacity(double opacity) { setOpacity(opacity); }
 
     /// override the default methods in QGraphicsItem.
     /// the `paint` does nothing because Sprite doesn't need to paint anything,

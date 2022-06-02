@@ -1,6 +1,7 @@
 #include "SnowWeather.h"
 #include "Game.h"
 #include "Map.h"
+#include "RandomGenerator.h"
 
 using namespace cute;
 
@@ -27,6 +28,7 @@ SnowWeather::~SnowWeather() {
 }
 
 void SnowWeather::start_() {
+    static RandomGenerator generator;
     Game *maps_game = map_->game();
 
     /// create some globular snow
@@ -40,11 +42,11 @@ void SnowWeather::start_() {
 
     /// position snows at top of camera
     for (QGraphicsPixmapItem *snow : globular_snows_) {
-        double offset_y = rand() % ((int)(maps_game->cam().height() * 2));      /// 0 - 2*height of cam
-        double offset_x = rand() % (int)(maps_game->cam().width() + 300) - 300; /// -300 -> right side of cam
+        double offset_x = generator.rand_double(-300, maps_game->cam().width());
+        double offset_y = generator.rand_double(0, maps_game->cam().height() * 2);
         snow->setPos(maps_game->cam().topLeft());
-        snow->setY(snow->y() - snow->boundingRect().height() - offset_y);
         snow->setX(snow->x() + offset_x);
+        snow->setY(snow->y() - snow->boundingRect().height() - offset_y);
     }
 
     /// create linear snow (snow1 and snow2)
@@ -94,6 +96,7 @@ void SnowWeather::pause_() {
 }
 
 void SnowWeather::on_snow_step_globular() {
+    static RandomGenerator generator;
     Game *maps_game = map_->game();
 
     double screen_bottom_y = map_->game()->center_cam_pos().y() + map_->game()->sceneRect().height() / 2;
@@ -104,8 +107,8 @@ void SnowWeather::on_snow_step_globular() {
 
         /// move back up if too far down
         if (snow->y() > screen_bottom_y) {
-            double offset_y = rand() % ((int)(maps_game->cam().height() * 2));      /// 0 - 2*height of cam
-            double offset_x = rand() % (int)(maps_game->cam().width() + 300) - 300; /// -300 -> right side of cam
+            double offset_x = generator.rand_double(-300, maps_game->cam().width());
+            double offset_y = generator.rand_double(0, maps_game->cam().height() * 2);
             snow->setPos(maps_game->cam().topLeft());
             snow->setY(snow->y() - snow->boundingRect().height() - offset_y);
             snow->setX(snow->x() + offset_x);

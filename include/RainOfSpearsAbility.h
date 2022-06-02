@@ -20,6 +20,9 @@ public slots:
     void on_spear_step();
 
 private:
+    void one_more_spear();
+
+private:
     int times_;
     QTimer *timer_;
     Sound *sound_effect_;

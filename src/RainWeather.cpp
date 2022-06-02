@@ -1,6 +1,7 @@
 #include "RainWeather.h"
 #include "Game.h"
 #include "Map.h"
+#include "RandomGenerator.h"
 #include "Sound.h"
 #include "Sprite.h"
 #include "Utilities.h"
@@ -88,17 +89,14 @@ void RainWeather::pause_() {
 /// Executed periodically to move the rain graphics down.
 /// Will also move them back up (at a random x,y) when far down enough.
 void RainWeather::on_rain_move_step() {
+    static RandomGenerator generator;
     Game *maps_game = map_->game();
-
     double screen_bottom_y = maps_game->cam().bottom();
     for (QGraphicsPixmapItem *rain : rains_) {
-        /// move down
         rain->moveBy(0, rain_step_size_);
-
-        /// move back up if too far down
         if (rain->y() > screen_bottom_y) {
-            double y = rand() % 700 - 700;                                     /// b/w -700 and 0
-            double x = rand() % ((int)(maps_game->cam().width()) + 400) - 200; /// -200 -> cam_width+200
+            int x = generator.rand_int(-200, static_cast<int>(maps_game->cam().width()) + 200);
+            int y = generator.rand_int(-700, 0);
             rain->setPos(maps_game->map_to_map(QPoint(x, y)));
         }
     }
@@ -117,14 +115,13 @@ void RainWeather::on_rain_opacity_step() {
 }
 
 void RainWeather::on_create_splash_step() {
-    Game *maps_game = map_->game();
-
+    static RandomGenerator generator;
     for (int i = 0, n = num_splash_per_step_; i < n; i++) {
         Sprite *splash = new Sprite();
-        splash->setOpacity(current_splash_opacity_);
+        splash->set_opacity(current_splash_opacity_);
         splash->add_frames(":/cute-engine-builtin/resources/graphics/effects/splash", 4, "splash", "splash");
-        double x = rand() % ((int)map_->game()->cam().width());  /// 0 - cam_width
-        double y = rand() % ((int)map_->game()->cam().height()); /// 0 - cam_height
+        int x = generator.rand_int(0, map_->game()->cam().width());
+        int y = generator.rand_int(0, map_->game()->cam().height());
         QPointF pos = map_->game()->map_to_map(QPoint(x, y));
         map_->play_once(splash, "splash", 50, pos);
     }
