@@ -265,8 +265,7 @@ void Map::on_cam_moved(QPointF new_cam_pos) {
 void Map::on_map_changed(Map *old_map, Map *new_map) {
     if (new_map == this) {
         emit set_as_current_map(this);
-    }
-    if (old_map == this && new_map != this) {
+    } else if (old_map == this) {
         emit unset_as_current_map(this);
     }
 }
@@ -364,13 +363,11 @@ void Map::remove_entity(Entity *entity) {
 }
 
 void Map::set_game(Game *game) {
-    /// if the map has a previous game, stop listening to that games events
     if (game_) {
         disconnect(game_, &Game::cam_moved, this, &Map::on_cam_moved);
         disconnect(game_, &Game::map_changed, this, &Map::on_map_changed);
     }
     game_ = game;
-    /// listen to new game
     if (game != nullptr) {
         connect(game_, &Game::cam_moved, this, &Map::on_cam_moved);
         connect(game, &Game::map_changed, this, &Map::on_map_changed);
